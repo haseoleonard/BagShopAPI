@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30611.23
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BagShopAPI", "BagShopAPI\BagShopAPI.csproj", "{C1808504-3AC2-4325-B4CA-F181ECC52560}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BagShopAPI", "BagShopAPI\BagShopAPI.csproj", "{C1808504-3AC2-4325-B4CA-F181ECC52560}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccessLayer", "DataAccessLayer\DataAccessLayer.csproj", "{AAD3B732-9C2C-4999-B75C-DB31DA7E9CDA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BussinessLayer", "BussinessLayer\BussinessLayer.csproj", "{6D6F6246-E77F-49F4-91A5-0D24A47E5137}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{C1808504-3AC2-4325-B4CA-F181ECC52560}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C1808504-3AC2-4325-B4CA-F181ECC52560}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C1808504-3AC2-4325-B4CA-F181ECC52560}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AAD3B732-9C2C-4999-B75C-DB31DA7E9CDA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AAD3B732-9C2C-4999-B75C-DB31DA7E9CDA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AAD3B732-9C2C-4999-B75C-DB31DA7E9CDA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AAD3B732-9C2C-4999-B75C-DB31DA7E9CDA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6D6F6246-E77F-49F4-91A5-0D24A47E5137}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6D6F6246-E77F-49F4-91A5-0D24A47E5137}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6D6F6246-E77F-49F4-91A5-0D24A47E5137}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6D6F6246-E77F-49F4-91A5-0D24A47E5137}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

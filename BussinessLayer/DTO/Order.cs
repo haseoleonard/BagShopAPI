@@ -1,0 +1,26 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace BussinessLayer.DTO
+{
+    public class Order
+    {
+        [Key]
+        public string orderID { get; set; }
+        [Required]
+        public string customerName { get; set; }
+        [Required]
+        public string customerAddress { get; set; }
+        [Required]
+        public string customerPhone { get; set; }
+        public System.DateTime orderDate { get; set; }
+        public bool paymentStatus { get; set; }
+        [Required]
+        public long total { get; set; }
+        public ICollection<OrderDetail> OrderDetails { get; set; }
+    }
+}
