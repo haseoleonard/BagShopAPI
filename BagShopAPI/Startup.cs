@@ -10,6 +10,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.EntityFrameworkCore;
+using BussinessLayer;
+using BussinessLayer.Repository;
+using DataAccessLayer;
 
 namespace BagShopAPI
 {
@@ -26,6 +29,9 @@ namespace BagShopAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddTransient<LNBagShopDBEntities>();
+            services.AddTransient(typeof(IRepositoryBase<,>), typeof(RepositoryBase<,>));
+            services.AddTransient<IProductRepository, ProductsRepository>();
 
         }
 

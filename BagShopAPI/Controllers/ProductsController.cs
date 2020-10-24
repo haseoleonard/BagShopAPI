@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Web.Http.Description;
 using BussinessLayer.DAO;
 using BussinessLayer.DTO;
+using BussinessLayer.Repository;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,12 +15,18 @@ namespace BagShopAPI.Controllers
     [ApiController]
     public class ProductsController : ControllerBase
     {
+        private IProductRepository _productRepository;
+
+        public ProductsController(IProductRepository productRepository)
+        {
+            _productRepository = productRepository;
+        }
+
         // GET api/values
         [HttpGet]
         public IEnumerable<Product> Get()
         {
-            ProductsDAO productsDAO = new ProductsDAO();
-            return productsDAO.GetProducts();
+            return _productRepository.getAll();
         }
 
         // GET api/values/5
@@ -27,8 +34,7 @@ namespace BagShopAPI.Controllers
         [ResponseType(typeof(Product))]
         public ActionResult<Product> Get(int id)
         {
-            ProductsDAO productsDAO = new ProductsDAO();
-            Product product = productsDAO.GetProduct(id);
+            var product = _productRepository.getByID(id);
             if (product == null) return NotFound();
             return Ok(product);
         }

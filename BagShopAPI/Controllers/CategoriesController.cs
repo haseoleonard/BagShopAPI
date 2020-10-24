@@ -14,6 +14,7 @@ namespace BagShopAPI.Controllers
     [ApiController]
     public class CategoriesController : ControllerBase
     {
+
         // GET api/values
         [HttpGet]
         public IEnumerable<Category> Get()
