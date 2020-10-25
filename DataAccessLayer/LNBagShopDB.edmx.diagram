@@ -4,14 +4,14 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="d36d5eedcf9646c0b7386a1c9d432300" Name="Diagram1">
+      <Diagram DiagramId="78e6dd4a59a84d7b89c18337d659a3e1" Name="Diagram1">
         <EntityTypeShape EntityType="LNBagShopDBModel.Category" Width="1.5" PointX="0.75" PointY="1.625" IsExpanded="true" />
         <EntityTypeShape EntityType="LNBagShopDBModel.OrderDetail" Width="1.5" PointX="5.25" PointY="1.375" IsExpanded="true" />
         <EntityTypeShape EntityType="LNBagShopDBModel.Order" Width="1.5" PointX="3" PointY="5.125" IsExpanded="true" />
         <EntityTypeShape EntityType="LNBagShopDBModel.Product" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
         <AssociationConnector Association="LNBagShopDBModel.FK__Products__catego__145C0A3F" ManuallyRouted="false" />
-        <AssociationConnector Association="LNBagShopDBModel.FK__OrderDeta__order__1FCDBCEB" ManuallyRouted="false" />
-        <AssociationConnector Association="LNBagShopDBModel.FK__OrderDeta__produ__20C1E124" ManuallyRouted="false" />
+        <AssociationConnector Association="LNBagShopDBModel.FK__OrderDeta__order__1BFD2C07" ManuallyRouted="false" />
+        <AssociationConnector Association="LNBagShopDBModel.FK__OrderDeta__produ__1CF15040" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

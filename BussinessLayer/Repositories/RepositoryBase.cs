@@ -7,8 +7,9 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
+using BussinessLayer.Interfaces;
 
-namespace BussinessLayer.Repository
+namespace BussinessLayer.Repositories
 {
     public class RepositoryBase<TS,TD> : IRepositoryBase<TS,TD>
         where TS : class
@@ -37,10 +38,12 @@ namespace BussinessLayer.Repository
             var mapper = config.CreateMapper();
             return mapper.Map<TD, TS>(entity);
         }
-        public TD Add(TD entity)
+        public void Add(ref TD entity)
         {
-            TS returnEntity = _context.Set<TS>().Add(ConvertToSourceType(entity));
-            return ConvertToDestinationType(returnEntity);
+            TS SourceEntity = ConvertToSourceType(entity);
+            _context.Set<TS>().Add(SourceEntity);
+            _context.SaveChanges();
+            entity = ConvertToDestinationType(SourceEntity);
         }
 
         public IEnumerable<TD> Find(Expression<Func<TD, bool>> expression)

@@ -18,6 +18,7 @@ namespace DataAccessLayer
         public int productID { get; set; }
         public int quantity { get; set; }
         public long total { get; set; }
+    
         public virtual Order Order { get; set; }
         public virtual Product Product { get; set; }
     }

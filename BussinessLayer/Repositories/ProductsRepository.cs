@@ -4,8 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BussinessLayer.Interfaces;
 
-namespace BussinessLayer.Repository
+namespace BussinessLayer.Repositories
 {
     public class ProductsRepository : RepositoryBase<DataAccessLayer.Product, DTO.Product>, IProductRepository
     {

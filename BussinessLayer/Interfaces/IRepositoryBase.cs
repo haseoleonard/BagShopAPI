@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BussinessLayer
+namespace BussinessLayer.Interfaces
 {
     public interface IRepositoryBase<TS,TD>
         where TS:class
@@ -16,7 +16,7 @@ namespace BussinessLayer
         IEnumerable<TD> getAll();
         TD getByID(int id);
         IEnumerable<TD> Find(Expression<Func<TD,bool>>expression);
-        TD Add(TD entity);
+        void Add(ref TD entity);
         void Remove(int id);
     }
 }

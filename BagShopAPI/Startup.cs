@@ -11,8 +11,10 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.EntityFrameworkCore;
 using BussinessLayer;
-using BussinessLayer.Repository;
+using BussinessLayer.UnitOfWork;
 using DataAccessLayer;
+using BussinessLayer.Repositories;
+using BussinessLayer.Interfaces;
 
 namespace BagShopAPI
 {
@@ -32,7 +34,10 @@ namespace BagShopAPI
             services.AddTransient<LNBagShopDBEntities>();
             services.AddTransient(typeof(IRepositoryBase<,>), typeof(RepositoryBase<,>));
             services.AddTransient<IProductRepository, ProductsRepository>();
-
+            services.AddTransient<ICategoriesRepository, CategoriesRepository>();
+            services.AddTransient<IOrdersRepository, OrdersRepository>();
+            services.AddTransient<IOrderDetailsRepository, OrderDetailsRepository>();
+            services.AddTransient<IUnitOfWork, UnitOfWork>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

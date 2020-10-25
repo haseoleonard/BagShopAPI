@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BussinessLayer.Repository
+namespace BussinessLayer.Interfaces
 {
     public interface IProductRepository:IRepositoryBase<DataAccessLayer.Product,DTO.Product>
     {

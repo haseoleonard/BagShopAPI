@@ -1,12 +1,8 @@
 ﻿using AutoMapper;
-using BussinessLayer.DTO;
 using BussinessLayer.Mapping;
 using DataAccessLayer;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BussinessLayer.DAO
 {
@@ -46,6 +42,22 @@ namespace BussinessLayer.DAO
                     product = mapper.Map<DataAccessLayer.Product, DTO.Product>(dbProduct);
                 }
                 return product;
+            }
+        }
+        
+        public DTO.Product Add(DataAccessLayer.Product product)
+        {
+            using(var db = new LNBagShopDBEntities())
+            {
+                var returnEntity = db.Products.Add(product);
+                var config = new MapperConfiguration(cfg =>
+                {
+                    cfg.AddProfile(new MappingProfile());
+                });
+                var mapper = config.CreateMapper();
+                var return1 = mapper.Map<DataAccessLayer.Product, DTO.Product>(returnEntity);
+                db.SaveChanges();
+                return return1;
             }
         }
     }

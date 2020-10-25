@@ -18,6 +18,7 @@ namespace BussinessLayer.DTO
         [Required]
         public string customerPhone { get; set; }
         public System.DateTime orderDate { get; set; }
+        [Required]
         public bool paymentStatus { get; set; }
         [Required]
         public long total { get; set; }
