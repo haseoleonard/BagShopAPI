@@ -16,8 +16,8 @@ namespace BussinessLayer.Repositories
 
         public DTO.Product UpdateProduct(DTO.Product product)
         {
-            DataAccessLayer.Product currentProduct = _context.Products.First(p=>p.productID==product.productID);
-            if (currentProduct != default(Product))
+            DataAccessLayer.Product currentProduct = _context.Products.Find(product.productID);
+            if (currentProduct != null)
             {
                 currentProduct.productName = product.productName;
                 currentProduct.description = product.description;
@@ -26,10 +26,10 @@ namespace BussinessLayer.Repositories
                 currentProduct.quantity = product.quantity;
                 currentProduct.categoryID = product.categoryID;
                 currentProduct.Category = _context.Categories.Find(product.categoryID);
+                currentProduct.statusID = product.status;
                 _context.SaveChanges();
-                return ConvertToDestinationType(currentProduct);
             }
-            return null;
+            return ConvertToDestinationType(currentProduct);
         }
     }
 }

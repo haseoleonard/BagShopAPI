@@ -14,7 +14,8 @@ namespace BussinessLayer.Mapping
         {
             CreateMap<DTO.Product, DataAccessLayer.Product>();
             CreateMap<DataAccessLayer.Product, DTO.Product>()
-                .ForMember(des=>des.categoryName,act=>act.MapFrom(src=>src.Category.categoryName));
+                .ForMember(des=>des.categoryName,act=>act.MapFrom(src=>src.Category.categoryName))
+                .ForMember(des=>des.status,act=>act.MapFrom(src=>src.statusID));
             //
             CreateMap<DTO.Category, DataAccessLayer.Category>();
             CreateMap<DataAccessLayer.Category, DTO.Category>();
@@ -24,7 +25,7 @@ namespace BussinessLayer.Mapping
             //
             CreateMap<DTO.OrderDetail, DataAccessLayer.OrderDetail>();
             CreateMap<DataAccessLayer.OrderDetail, DTO.OrderDetail>()
-                .ForMember(des=>des.productName,act=>act.MapFrom(src=>src.Product.productName));
+                .ForMember(des => des.productName, act => act.MapFrom(src => src.Product.productName));
         }
     }
 }

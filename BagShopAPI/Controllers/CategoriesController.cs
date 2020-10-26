@@ -35,7 +35,7 @@ namespace BagShopAPI.Controllers
         {
             Category category = _unitOfWork.Categories.getByID(id);
             if(category==null)return NotFound();
-            return Ok(category);
+            return StatusCode(StatusCodes.Status302Found,category);
         }
 
         // POST api/values
@@ -45,24 +45,28 @@ namespace BagShopAPI.Controllers
             try
             {
                 _unitOfWork.Categories.Add(ref category);
-                return Ok(category);
+                return StatusCode(StatusCodes.Status201Created,category);
             }catch(Exception ex)
             {
-                return BadRequest(ex);
+                return StatusCode(StatusCodes.Status500InternalServerError,ex);
             }            
         }
 
         // PUT api/values/5
-        [HttpPut("{id}")]
-        public ActionResult<Product> Put(int id, [FromBody] string value)
+        [HttpPut]
+        public IActionResult Put([FromForm] Category category)
         {
-            return Ok();
-        }
-
-        // DELETE api/values/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
+            if (category.categoryID < 0 || category.categoryID > int.MaxValue || _unitOfWork.Categories.getByID(category.categoryID) == null||category.categoryName.Trim().Length==0)
+                return StatusCode(StatusCodes.Status406NotAcceptable);
+            try
+            {
+                var updatedCate = _unitOfWork.Categories.updateCategory(category);
+                return StatusCode(StatusCodes.Status202Accepted, updatedCate);
+            }
+            catch(Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex);
+            }
         }
     }
 }

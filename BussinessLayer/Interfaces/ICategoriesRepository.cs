@@ -8,6 +8,6 @@ namespace BussinessLayer.Interfaces
 {
     public interface ICategoriesRepository:IRepositoryBase<DataAccessLayer.Category,DTO.Category>
     {
-
+        DTO.Category updateCategory(DTO.Category category);
     }
 }

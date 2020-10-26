@@ -15,7 +15,7 @@ namespace BussinessLayer.Interfaces
         TS ConvertToSourceType(TD entity);
         IEnumerable<TD> getAll();
         TD getByID(int id);
-        IEnumerable<TD> Find(Expression<Func<TD,bool>>expression);
+        IEnumerable<TD> Find(Expression<Func<TS,bool>>expression);
         void Add(ref TD entity);
         void Remove(int id);
     }

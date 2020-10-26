@@ -46,9 +46,15 @@ namespace BussinessLayer.Repositories
             entity = ConvertToDestinationType(SourceEntity);
         }
 
-        public IEnumerable<TD> Find(Expression<Func<TD, bool>> expression)
+        public IEnumerable<TD> Find(Expression<Func<TS, bool>> expression)
         {
-            throw new NotImplementedException();
+            var totalResult = _context.Set<TS>().Where(expression);
+            List<TD> returnList = new List<TD>();
+            foreach(TS ts in totalResult)
+            {
+                returnList.Add(ConvertToDestinationType(ts));
+            }
+            return returnList;
         }
 
         public IEnumerable<TD> getAll()

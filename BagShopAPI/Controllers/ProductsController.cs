@@ -14,6 +14,7 @@ using System.IO;
 using System.Runtime.Remoting.Contexts;
 using Microsoft.AspNetCore.Hosting;
 using System.Net.Http.Headers;
+using BussinessLayer.Validation;
 
 namespace BagShopAPI.Controllers
 {
@@ -61,16 +62,19 @@ namespace BagShopAPI.Controllers
                 if (!Directory.Exists(savePath)) Directory.CreateDirectory(savePath);
                 var fileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
                 string fullPath = Path.Combine(savePath, fileName);
-                using (var stream = new FileStream(fullPath,FileMode.Create))
+                if (!System.IO.File.Exists(fullPath))
                 {
-                    file.CopyTo(stream);
+                    using (var stream = new FileStream(fullPath, FileMode.Create))
+                    {
+                        file.CopyTo(stream);
+                    }
                 }
                 product.image = fileName;
             }
             try
             {
                 _unitOfWork.Products.Add(ref product);
-                return Ok(product);
+                return StatusCode(StatusCodes.Status201Created,product);
             }catch(Exception ex)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError,ex);
@@ -78,11 +82,56 @@ namespace BagShopAPI.Controllers
         }
 
         // PUT api/values/5
-        [HttpPut("{id}")]
-        public ActionResult<Product> Put(int id, [FromBody] Product product)
+        [HttpPut]
+        public IActionResult Put([FromForm] Product product)
         {
-            
-            return Ok();
+            try
+            {
+                if (_unitOfWork.Products.getByID(product.productID) != null)
+                {
+                    if (ValidationService.isValidProduct(product))
+                    {
+                        var file = Request.Form.Files[0];
+                        if (file != null && file.Length > 0)
+                        {
+                            if (file.ContentType.Contains("image"))
+                            {
+                                string webRootPath = _env.WebRootPath;
+                                string savePath = Path.Combine(webRootPath, "Images");
+                                if (!Directory.Exists(savePath)) Directory.CreateDirectory(savePath);
+                                var fileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
+                                string fullPath = Path.Combine(savePath, fileName);
+                                if (!System.IO.File.Exists(fullPath))
+                                {
+                                    using (var stream = new FileStream(fullPath, FileMode.Create))
+                                    {
+                                        file.CopyTo(stream);
+                                    }
+                                }
+                                product.image = fileName;
+                            }
+                            else
+                            {
+                                return StatusCode(StatusCodes.Status415UnsupportedMediaType);
+                            }
+                        }
+                        _unitOfWork.Products.UpdateProduct(product);
+                        return StatusCode(StatusCodes.Status202Accepted, product);
+                    }
+                    else
+                    {
+                        return StatusCode(StatusCodes.Status406NotAcceptable);
+                    }
+                }
+                else
+                {
+                    return NotFound();
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex);
+            }
         }
     }
 }
