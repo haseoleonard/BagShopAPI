@@ -68,7 +68,7 @@ namespace BussinessLayer.Repositories
 
         public void Remove(int id)
         {
-            _context.Set<TS>().Remove(ConvertToSourceType(getByID(id)));
+            _context.Set<TS>().Remove(_context.Set<TS>().Find(id));
         }
     }
 }

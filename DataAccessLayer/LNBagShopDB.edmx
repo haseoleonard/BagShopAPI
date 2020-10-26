@@ -42,7 +42,7 @@
           <Property Name="productName" Type="nvarchar" MaxLength="250" Nullable="false" />
           <Property Name="image" Type="varchar" MaxLength="200" />
           <Property Name="description" Type="nvarchar" MaxLength="250" Nullable="false" />
-          <Property Name="price" Type="int" Nullable="false" />
+          <Property Name="price" Type="bigint" Nullable="false" />
           <Property Name="quantity" Type="int" Nullable="false" />
           <Property Name="categoryID" Type="int" Nullable="false" />
           <Property Name="statusID" Type="bit" Nullable="false" />
@@ -147,7 +147,7 @@
           <Property Name="productName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="image" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="description" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="price" Type="Int32" Nullable="false" />
+          <Property Name="price" Type="Int64" Nullable="false" />
           <Property Name="quantity" Type="Int32" Nullable="false" />
           <Property Name="categoryID" Type="Int32" Nullable="false" />
           <Property Name="statusID" Type="Boolean" Nullable="false" />

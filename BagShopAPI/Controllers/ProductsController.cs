@@ -10,6 +10,10 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using BussinessLayer.DAO;
 using Microsoft.AspNetCore.Http.Extensions;
+using System.IO;
+using System.Runtime.Remoting.Contexts;
+using Microsoft.AspNetCore.Hosting;
+using System.Net.Http.Headers;
 
 namespace BagShopAPI.Controllers
 {
@@ -18,17 +22,23 @@ namespace BagShopAPI.Controllers
     public class ProductsController : ControllerBase
     {
         private IUnitOfWork _unitOfWork;
-
-        public ProductsController(IUnitOfWork unitOfWork)
+        private readonly IHostingEnvironment _env;
+        public ProductsController(IUnitOfWork unitOfWork,IHostingEnvironment env)
         {
             _unitOfWork = unitOfWork;
+            _env = env;
         }
 
         // GET api/values
         [HttpGet]
-        public IEnumerable<Product> Get()
+        public IActionResult Get()
         {
-            return _unitOfWork.Products.getAll();
+            var list = _unitOfWork.Products.getAll();
+            if (list.Count() > 0)
+            {
+                return StatusCode(StatusCodes.Status302Found, list);
+            }
+            return StatusCode(StatusCodes.Status204NoContent);
         }
 
         // GET api/values/5
@@ -38,36 +48,41 @@ namespace BagShopAPI.Controllers
         {
             var product = _unitOfWork.Products.getByID(id);
             if (product == null) return NotFound();
-            return Ok(product);
+            return StatusCode(StatusCodes.Status302Found,product);
         }
-
         // POST api/values
-        [HttpPost]
+        [HttpPost, DisableRequestSizeLimit]
         public IActionResult Post([FromForm] Product product)
         {
-            //ProductsDAO productsDAO = new ProductsDAO();
-            //var result = productsDAO.Add(product);
+            var file = Request.Form.Files[0];
+            if (file!=null&&file.Length>0) {
+                string webRootPath = _env.WebRootPath;
+                string savePath = Path.Combine(webRootPath, "Images");
+                if (!Directory.Exists(savePath)) Directory.CreateDirectory(savePath);
+                var fileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
+                string fullPath = Path.Combine(savePath, fileName);
+                using (var stream = new FileStream(fullPath,FileMode.Create))
+                {
+                    file.CopyTo(stream);
+                }
+                product.image = fileName;
+            }
             try
             {
                 _unitOfWork.Products.Add(ref product);
                 return Ok(product);
             }catch(Exception ex)
             {
-                return BadRequest(ex);
+                return StatusCode(StatusCodes.Status500InternalServerError,ex);
             }            
         }
 
         // PUT api/values/5
         [HttpPut("{id}")]
-        public ActionResult<Product> Put(int id, [FromBody] string value)
+        public ActionResult<Product> Put(int id, [FromBody] Product product)
         {
+            
             return Ok();
-        }
-
-        // DELETE api/values/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
         }
     }
 }

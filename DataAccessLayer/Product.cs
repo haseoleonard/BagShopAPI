@@ -24,7 +24,7 @@ namespace DataAccessLayer
         public string productName { get; set; }
         public string image { get; set; }
         public string description { get; set; }
-        public int price { get; set; }
+        public long price { get; set; }
         public int quantity { get; set; }
         public int categoryID { get; set; }
         public bool statusID { get; set; }

@@ -15,6 +15,7 @@ using BussinessLayer.UnitOfWork;
 using DataAccessLayer;
 using BussinessLayer.Repositories;
 using BussinessLayer.Interfaces;
+using Microsoft.AspNetCore.Hosting.Internal;
 
 namespace BagShopAPI
 {
@@ -31,6 +32,7 @@ namespace BagShopAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            //services.AddTransient<IHostingEnvironment>();
             services.AddTransient<LNBagShopDBEntities>();
             services.AddTransient(typeof(IRepositoryBase<,>), typeof(RepositoryBase<,>));
             services.AddTransient<IProductRepository, ProductsRepository>();
@@ -47,7 +49,7 @@ namespace BagShopAPI
             {
                 app.UseDeveloperExceptionPage();
             }
-
+            app.UseStaticFiles();
             app.UseMvc();
         }
     }
