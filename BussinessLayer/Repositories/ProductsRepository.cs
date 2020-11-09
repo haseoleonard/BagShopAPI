@@ -13,7 +13,13 @@ namespace BussinessLayer.Repositories
         public ProductsRepository(LNBagShopDBEntities context) : base(context)
         {
         }
-
+        public override void Add(ref DTO.Product product)
+        {
+            DataAccessLayer.Product SourceEntity = Mapper.Map<DTO.Product,DataAccessLayer.Product>( product);
+            _context.Products.Add(SourceEntity);
+            _context.SaveChanges();
+            product = Mapper.Map<DataAccessLayer.Product, DTO.Product>(SourceEntity);
+        }
         public DTO.Product UpdateProduct(DTO.Product product)
         {
             DataAccessLayer.Product currentProduct = _context.Products.Find(product.productID);
@@ -27,9 +33,8 @@ namespace BussinessLayer.Repositories
                 currentProduct.categoryID = product.categoryID;
                 currentProduct.Category = _context.Categories.Find(product.categoryID);
                 currentProduct.statusID = product.status;
-                _context.SaveChanges();
             }
-            return ConvertToDestinationType(currentProduct);
+            return Mapper.Map<DataAccessLayer.Product,DTO.Product>(currentProduct);
         }
     }
 }

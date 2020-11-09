@@ -8,5 +8,7 @@ namespace BussinessLayer.Interfaces
 {
     public interface IOrdersRepository:IRepositoryBase<DataAccessLayer.Order,DTO.Order>
     {
+        DTO.Order GetOrder(string orderID);
     }
+    
 }

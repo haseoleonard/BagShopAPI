@@ -37,7 +37,7 @@ namespace BagShopAPI.Controllers
         {
             Category category = _unitOfWork.Categories.getByID(id);
             if(category==null)return NotFound();
-            return StatusCode(StatusCodes.Status302Found,category);
+            return StatusCode(StatusCodes.Status200OK,category);
         }
 
         // POST api/values

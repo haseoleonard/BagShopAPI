@@ -15,6 +15,7 @@ namespace BussinessLayer.UnitOfWork
         private IProductRepository _products;
         private ICategoriesRepository _categories;
         private IOrdersRepository _orders;
+        private IOrderDetailsRepository _orderDetails;
         public UnitOfWork(LNBagShopDBEntities context)
         {
             _context = context;
@@ -53,6 +54,17 @@ namespace BussinessLayer.UnitOfWork
                     this._orders = new OrdersRepository(_context);
                 }
                 return this._orders;
+            }
+        }
+        public IOrderDetailsRepository OrderDetails
+        {
+            get
+            {
+                if (this._orderDetails == null)
+                {
+                    this._orderDetails = new OrderDetailsRepository(_context);
+                }
+                return this._orderDetails;
             }
         }
         public void Dispose()

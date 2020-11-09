@@ -39,7 +39,7 @@ namespace BagShopAPI.Controllers
             var list = _unitOfWork.Products.getAll();
             if (list.Count() > 0)
             {
-                return StatusCode(StatusCodes.Status302Found, list);
+                return StatusCode(StatusCodes.Status200OK, list);
             }
             return StatusCode(StatusCodes.Status204NoContent);
         }
@@ -51,7 +51,7 @@ namespace BagShopAPI.Controllers
         {
             var product = _unitOfWork.Products.getByID(id);
             if (product == null) return NotFound();
-            return StatusCode(StatusCodes.Status302Found,product);
+            return StatusCode(StatusCodes.Status200OK,product);
         }
         // POST api/values
         [HttpPost, DisableRequestSizeLimit]
@@ -118,6 +118,7 @@ namespace BagShopAPI.Controllers
                             }
                         }
                         _unitOfWork.Products.UpdateProduct(product);
+                        _unitOfWork.Save();
                         return StatusCode(StatusCodes.Status202Accepted, product);
                     }
                     else

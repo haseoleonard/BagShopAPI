@@ -8,5 +8,6 @@ namespace BussinessLayer.Interfaces
 {
     public interface IOrderDetailsRepository:IRepositoryBase<DataAccessLayer.OrderDetail,DTO.OrderDetail>
     {
+        void AddRange(ICollection<DTO.OrderDetail> orderDetails);
     }
 }

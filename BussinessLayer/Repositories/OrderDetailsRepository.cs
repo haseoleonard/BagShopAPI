@@ -12,7 +12,11 @@ namespace BussinessLayer.Repositories
     {
         public OrderDetailsRepository(LNBagShopDBEntities context) : base(context)
         {
-
+        }
+        public void AddRange(ICollection<DTO.OrderDetail> orderDetails)
+        {
+            ICollection<DataAccessLayer.OrderDetail> details = Mapper.Map<ICollection<DTO.OrderDetail>,ICollection<DataAccessLayer.OrderDetail> >(orderDetails);
+            _context.OrderDetails.AddRange(details);
         }
     }
 }

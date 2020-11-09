@@ -13,6 +13,7 @@ namespace BussinessLayer.UnitOfWork
         IProductRepository Products { get; }
         ICategoriesRepository Categories { get; }
         IOrdersRepository Orders { get; }
+        IOrderDetailsRepository OrderDetails { get; }
         int Save();
     }
 }

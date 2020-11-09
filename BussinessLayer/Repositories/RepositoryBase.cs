@@ -26,49 +26,29 @@ namespace BussinessLayer.Repositories
             });
             Mapper = config.CreateMapper();
         }
-        public TD ConvertToDestinationType(TS entity)
+        public virtual void Add(ref TD entity)
         {
-            return Mapper.Map<TS, TD>(entity);
-        }
-        public TS ConvertToSourceType(TD entity)
-        {
-            return Mapper.Map<TD, TS>(entity);
-        }
-        public void Add(ref TD entity)
-        {
-            TS SourceEntity = ConvertToSourceType(entity);
+            TS SourceEntity = Mapper.Map<TD,TS>(entity);
             _context.Set<TS>().Add(SourceEntity);
-            _context.SaveChanges();
-            entity = ConvertToDestinationType(SourceEntity);
         }
 
-        public IEnumerable<TD> Find(Expression<Func<TS, bool>> expression)
+        public virtual IEnumerable<TD> Find(Expression<Func<TS, bool>> expression)
         {
             var totalResult = _context.Set<TS>().Where(expression);
-            List<TD> returnList = new List<TD>();
-            foreach(TS ts in totalResult)
-            {
-                returnList.Add(ConvertToDestinationType(ts));
-            }
-            return returnList;
+            return Mapper.Map<List<TS>, List<TD>>(totalResult.ToList());
         }
 
         public IEnumerable<TD> getAll()
         {
-            List<TD> returnList = new List<TD>();
-            foreach(TS entity in _context.Set<TS>().ToList())
-            {
-                returnList.Add(ConvertToDestinationType(entity));
-            }
-            return returnList;
+            return Mapper.Map<List<TS>, List<TD>>(_context.Set<TS>().ToList());
         }
 
-        public TD getByID(int id)
+        public virtual TD getByID(int id)
         {
-            return ConvertToDestinationType(_context.Set<TS>().Find(id));
+            return Mapper.Map<TS,TD>(_context.Set<TS>().Find(id));
         }
 
-        public void Remove(int id)
+        public virtual void Remove(int id)
         {
             _context.Set<TS>().Remove(_context.Set<TS>().Find(id));
         }

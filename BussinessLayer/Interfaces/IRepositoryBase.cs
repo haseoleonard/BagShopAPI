@@ -11,8 +11,6 @@ namespace BussinessLayer.Interfaces
         where TS:class
         where TD:class
     {
-        TD ConvertToDestinationType(TS entity);
-        TS ConvertToSourceType(TD entity);
         IEnumerable<TD> getAll();
         TD getByID(int id);
         IEnumerable<TD> Find(Expression<Func<TS,bool>>expression);

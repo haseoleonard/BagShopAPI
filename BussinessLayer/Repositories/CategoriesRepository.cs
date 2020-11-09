@@ -24,7 +24,7 @@ namespace BussinessLayer.Repositories
                 currentCategory.categoryName = category.categoryName;
                 _context.SaveChanges();
             }
-            return ConvertToDestinationType(currentCategory);
+            return Mapper.Map<DataAccessLayer.Category,DTO.Category>(currentCategory);
         }
     }
 }
