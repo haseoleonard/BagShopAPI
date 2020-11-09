@@ -7,11 +7,13 @@ using BussinessLayer.UnitOfWork;
 using BussinessLayer.DTO;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Cors;
 
 namespace BagShopAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [EnableCors("AllowOrgin")]
     public class CategoriesController : ControllerBase
     {
         private IUnitOfWork _unitOfWork;

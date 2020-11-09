@@ -40,6 +40,10 @@ namespace BagShopAPI
             services.AddTransient<IOrdersRepository, OrdersRepository>();
             services.AddTransient<IOrderDetailsRepository, OrderDetailsRepository>();
             services.AddTransient<IUnitOfWork, UnitOfWork>();
+            services.AddCors(c =>
+            {
+                c.AddPolicy("AllowOrigion", option => option.AllowAnyOrigin());
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -51,6 +55,7 @@ namespace BagShopAPI
             }
             app.UseStaticFiles();
             app.UseMvc();
+            app.UseCors(act => act.AllowAnyOrigin());
         }
     }
 }

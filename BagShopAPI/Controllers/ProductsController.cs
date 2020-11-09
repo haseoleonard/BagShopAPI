@@ -15,11 +15,13 @@ using System.Runtime.Remoting.Contexts;
 using Microsoft.AspNetCore.Hosting;
 using System.Net.Http.Headers;
 using BussinessLayer.Validation;
+using Microsoft.AspNetCore.Cors;
 
 namespace BagShopAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [EnableCors("AllowOrigin")]
     public class ProductsController : ControllerBase
     {
         private IUnitOfWork _unitOfWork;

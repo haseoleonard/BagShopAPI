@@ -16,27 +16,23 @@ namespace BussinessLayer.Repositories
         where TD : class
     {
         protected readonly LNBagShopDBEntities _context;
+        protected IMapper Mapper;
         public RepositoryBase(LNBagShopDBEntities context)
         {
             _context = context;
+            var config = new MapperConfiguration(cfg =>
+            {
+                cfg.AddProfile(new MappingProfile());
+            });
+            Mapper = config.CreateMapper();
         }
         public TD ConvertToDestinationType(TS entity)
         {
-            var config = new MapperConfiguration(cfg =>
-            {
-                cfg.AddProfile(new MappingProfile());
-            });
-            var mapper = config.CreateMapper();
-            return mapper.Map<TS, TD>(entity);
+            return Mapper.Map<TS, TD>(entity);
         }
         public TS ConvertToSourceType(TD entity)
         {
-            var config = new MapperConfiguration(cfg =>
-            {
-                cfg.AddProfile(new MappingProfile());
-            });
-            var mapper = config.CreateMapper();
-            return mapper.Map<TD, TS>(entity);
+            return Mapper.Map<TD, TS>(entity);
         }
         public void Add(ref TD entity)
         {
