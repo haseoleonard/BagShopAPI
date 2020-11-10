@@ -53,24 +53,26 @@ namespace BagShopAPI.Controllers
             {
                 bool valid = true;
                 string orderID = GeneratingHelperes.IDGenerating();
-                order.orderID = orderID;
                 List<OrderDetail> failedList = null;
                 foreach (var item in order.OrderDetails)
                 {
-                    int inStock = _unitOfWork.Products.getByID(item.productID).quantity;
-                    if (item.quantity > inStock)
+                    var inStockProduct = _unitOfWork.Products.getByID(item.productID);
+                    if (item.quantity > inStockProduct.quantity)
                     {
                         valid = false;
                         if (failedList == null) failedList = new List<OrderDetail>();
-                        item.quantity = inStock;
+                        item.quantity = inStockProduct.quantity;
                         failedList.Add(item);
                     }                        
                     item.orderID = orderID;
+                    item.total = item.quantity * inStockProduct.price;
+                    order.total += item.total;
                 }
                 if (valid)
                 {
+                    order.orderID = orderID;
+                    order.orderDate = DateTime.Now;
                     _unitOfWork.Orders.Add(ref order);
-                    _unitOfWork.OrderDetails.AddRange(order.OrderDetails);
                     if (_unitOfWork.Save() == order.OrderDetails.Count + 1)
                     {
                         Order newOrder = _unitOfWork.Orders.GetOrder(orderID);
@@ -83,7 +85,7 @@ namespace BagShopAPI.Controllers
                 }
                 else
                 {
-                    return StatusCode(StatusCodes.Status406NotAcceptable, failedList);
+                    return StatusCode(StatusCodes.Status400BadRequest, failedList);
                 }
             }
             catch (Exception ex)

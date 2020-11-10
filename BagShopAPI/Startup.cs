@@ -42,7 +42,13 @@ namespace BagShopAPI
             services.AddTransient<IUnitOfWork, UnitOfWork>();
             services.AddCors(c =>
             {
-                c.AddPolicy("AllowOrigion", option => option.AllowAnyOrigin());
+                c.AddPolicy("AllowOrigin", option => {
+                    option.AllowAnyOrigin();
+                    option.AllowAnyMethod();
+                    option.AllowAnyHeader();
+                    });
+                //c.AddPolicy("AllowMethod", option => option.AllowAnyMethod());
+                //c.AddPolicy("AllowHeader", option => option.AllowAnyHeader());
             });
         }
 
@@ -55,7 +61,11 @@ namespace BagShopAPI
             }
             app.UseStaticFiles();
             app.UseMvc();
-            app.UseCors(act => act.AllowAnyOrigin());
+            app.UseCors(act => {
+                act.AllowAnyOrigin();
+                act.AllowAnyMethod();
+                act.AllowAnyHeader();
+                });
         }
     }
 }

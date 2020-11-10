@@ -17,11 +17,11 @@ namespace BussinessLayer.DTO
         public string customerAddress { get; set; }
         [Required]
         public string customerPhone { get; set; }
-        public System.DateTime orderDate { get; set; }
+        public DateTime orderDate { get; set; }
         [Required]
         public bool paymentStatus { get; set; }
         [Required]
         public long total { get; set; }
-        public ICollection<OrderDetail> OrderDetails { get; set; }
+        public virtual ICollection<OrderDetail> OrderDetails { get; set; }
     }
 }
